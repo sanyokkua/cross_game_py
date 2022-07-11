@@ -31,7 +31,7 @@ Also, here will be used build and distribution tools for packaging this project
 
 ## Structure
 The current structure of the project:
-./crossgame - Main module with all the logic and basic console app
-./crossgameui - Module with the implementation of the simple Tkinter UI
-./resources - folder with any static resources that can be used in the app
-./tests - unit tests (currently only for the Main module)
+- ./crossgame - Main module with all the logic and basic console app
+- ./crossgameui - Module with the implementation of the simple Tkinter UI
+- ./resources - folder with any static resources that can be used in the app
+- ./tests - unit tests (currently only for the Main module)
