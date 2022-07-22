@@ -3,7 +3,7 @@
     Raises:
         GameIdException: Raised when problems with game_id
         NumberOfPlayersException: Raised if the number of players is not 2
-        CurrentPlayerCantMakeAmoveException: Raised when active player tries to 
+        CurrentPlayerCantMakeAmoveException: Raised when active player tries to
                                                 make move to the non empty cell
         PlayerNotFoundException: Raised if the player by some criteria is not found
         PlayerNotFoundException: Raised if the player by some criteria is not found

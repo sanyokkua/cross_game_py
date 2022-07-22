@@ -130,3 +130,4 @@ dmypy.json
 
 # Other Files to be ignored
 .DS_Store
+bin
