@@ -11,6 +11,7 @@ class BaseAppWidget:
     """Base App class created to provide functionality of loading properties
        and manage language variables retrival
     """
+
     def __init__(self, app_lang: str) -> None:
         self.app_lang = app_lang
         self.base_dir = os.getcwd()

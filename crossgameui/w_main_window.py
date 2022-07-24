@@ -20,6 +20,7 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         BaseAppWidget (_type_): Required for containing common properties and lan methods
         ttk (_type_): Frame
     """
+
     def __init__(self, app_lang: str, root: tk.Tk) -> None:
         BaseAppWidget.__init__(self, app_lang=app_lang)
         ttk.Frame.__init__(self, root)
@@ -109,13 +110,10 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         """
         log.debug('on_field_button_click')
         button.state([f'{tk.DISABLED}'])
-        img: tk.PhotoImage = None #Can be used to put on button after click
         text: str = None
         if Sign.X is self.latest_state.active_player.sign:
-            img = self.frame_field.img_cross
             text = 'X'
         else:
-            img = self.frame_field.img_zero
             text = 'O'
         button.configure(text=text)
         self.latest_state = self.controller.make_move(

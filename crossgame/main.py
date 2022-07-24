@@ -1,7 +1,8 @@
-from crossgame.api.persistance import GameStatePersistance
 from crossgame.api.controller import Controller
+from crossgame.api.persistance import GameStatePersistance
 from crossgame.api.player import Player
 from crossgame.logic.game import GameStateDto
+
 
 def new_game():
     print("New Game")
@@ -14,7 +15,7 @@ def new_game():
     player_2_name = input()
     join_game_state = controller.join_to_game_game_session(
         player_2_name, start_game_state.game_id)
-    game_started_state = controller.start_game(join_game_state.game_id)
+    controller.start_game(join_game_state.game_id)
 
     while True:
         current_state: GameStateDto = controller.get_status(
@@ -26,8 +27,8 @@ def new_game():
         active_player: Player = current_state.active_player
         print(
             f'Player - {active_player.player_name} with sign {active_player.sign} please make a move (enter row column')
-        inputValues = input()
-        row, column = inputValues.split(' ')
+        input_values = input()
+        row, column = input_values.split(' ')
         state_after_move = controller.make_move(
             current_state.game_id, active_player.player_id, int(row), int(column))
 
@@ -37,5 +38,6 @@ def new_game():
             break
         else:
             print("Next move")
+
 
 new_game()

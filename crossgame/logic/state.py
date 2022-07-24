@@ -7,8 +7,8 @@
     Returns:
         _type_: Game State
     """
-from dataclasses import dataclass
 import logging as log
+from dataclasses import dataclass
 
 from crossgame.exceptions.game_exceptions import (CellIsAlreadyBusyException,
                                                   IncorrectFieldSizeException)

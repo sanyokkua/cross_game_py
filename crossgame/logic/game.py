@@ -13,6 +13,7 @@
         _type_: _description_
 """
 from dataclasses import dataclass
+
 from crossgame.api.player import Player
 from crossgame.exceptions.game_exceptions import (
     CurrentPlayerCantMakeAmoveException, GameIdException,
