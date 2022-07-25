@@ -1,8 +1,0 @@
-TEXT_APP_NAME = 'app_win_name_text'
-TEXT_GAME_FINISHED_MESSAGE_BOX = 'game_finished_msg_box_text'
-TEXT_GAME_FINISHED_WIN = 'game_finished_win_text'
-TEXT_GAME_FINISHED_DRAW = 'game_finished_draw_text'
-TEXT_LABEL_PLAYER_1_NAME = 'text_lbl_pl_1_name'
-TEXT_LABEL_PLAYER_2_NAME = 'text_lbl_pl_2_name'
-TEXT_BUTTON_RESET = 'text_btn_res'
-TEXT_BUTTON_START = 'text_btn_start'

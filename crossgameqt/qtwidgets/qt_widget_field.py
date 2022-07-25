@@ -1,10 +1,11 @@
 import logging as log
 from typing import Callable
 
-from crossgame.logic.game_enums import Sign
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import (QGridLayout, QGroupBox, QPushButton, QSizePolicy,
                              QToolButton, QVBoxLayout, QWidget)
+
+from crossgame.logic.game_enums import Sign
 
 
 class TicTacToeFieldWidget(QWidget):

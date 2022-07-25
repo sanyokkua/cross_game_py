@@ -1,4 +1,5 @@
-"""Represents the main logic of the game (game handler)
+"""
+Represent the main logic of the game (game handler).
 
     Raises:
         GameIdException: Raised when problems with game_id
@@ -8,10 +9,8 @@
         PlayerNotFoundException: Raised if the player by some criteria is not found
         PlayerNotFoundException: Raised if the player by some criteria is not found
         PlayerNotFoundException: Raised if the player by some criteria is not found
-
-    Returns:
-        _type_: _description_
 """
+
 from dataclasses import dataclass
 
 from crossgame.api.player import Player
@@ -24,27 +23,30 @@ from crossgame.logic.state import GameState
 
 @dataclass
 class WinnerInfo:
-    """Keeps information about winner such as Player and Sign (X or O) """
-    player: Player
-    sign: Sign
+    """Keep information about winner such as Player and Sign (X or O)."""
+
+    player: Player | None
+    sign: Sign | None
     is_draw: bool = False
 
 
 @dataclass
 class GameStateDto:
-    """DTO class to represent current game status"""
+    """Represent current game status."""
+
     game_id: str
-    player_names: list
-    active_player: Player = None
-    field: list = None
-    winner: WinnerInfo = None
+    player_names: list[str]
+    active_player: Player | None = None
+    field: list[list[str | None]] | None = None
+    winner: WinnerInfo | None = None
 
 
 class TicTacToeGame:
-    """Base Tic-Tac-Toe game class"""
+    """Base Tic-Tac-Toe game class."""
 
     def __init__(self, game_id: str, players: list[Player], row: int = 3, column: int = 3) -> None:
-        """Creating an instance of TicTacToeGame
+        """
+        Create an instance of TicTacToeGame.
 
         Args:
             game_id (str): unique game id
@@ -67,7 +69,9 @@ class TicTacToeGame:
         self.winner = None
 
     def make_move(self, player_id: str, row: int, column: int) -> GameStateDto:
-        """represents move operation of the player
+        """
+        Represent move operation of the player.
+
         Puts player Sign into the cell by coordinates row and column
 
         Args:
@@ -91,13 +95,13 @@ class TicTacToeGame:
         else:
             raise CurrentPlayerCantMakeAmoveException
 
-    def __get_player_by_id(self, player_id) -> Player:
+    def __get_player_by_id(self, player_id: str) -> Player:
         for player in self.players:
             if player.player_id == player_id:
                 return player
         raise PlayerNotFoundException(f"Player with {player_id} is not found")
 
-    def __get_other_player(self, player_id) -> Player:
+    def __get_other_player(self, player_id: str) -> Player:
         for player in self.players:
             if player.player_id != player_id:
                 return player
@@ -117,7 +121,10 @@ class TicTacToeGame:
         raise PlayerNotFoundException('Player with passed sign not found')
 
     def get_game_state(self) -> GameStateDto:
-        """Generates game state information based on the internal state of game objects
+        """
+        Generate game state information.
+
+        Based on the internal state of game objects
 
         Returns:
             GameStateDto: Game State information
@@ -136,8 +143,9 @@ class TicTacToeGame:
         else:
             return GameStateDto(self.game_id, player_names_list, active_player, self.get_field())
 
-    def get_field(self):
-        """Returns a copy of the game field (matrix)
+    def get_field(self) -> list[list[Sign]]:
+        """
+        Return a copy of the game field (matrix).
 
         Returns:
             _type_: [[]]

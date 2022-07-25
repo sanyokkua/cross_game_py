@@ -1,4 +1,5 @@
-"""Represents Tic-Tac-Toe Game State
+"""
+Represent Tic-Tac-Toe Game State.
 
     Raises:
         IncorrectFieldSize: can be raised if class initialized with incorrect params
@@ -6,7 +7,7 @@
 
     Returns:
         _type_: Game State
-    """
+"""
 import logging as log
 from dataclasses import dataclass
 
@@ -17,15 +18,28 @@ from crossgame.logic.game_enums import GameStatus, Sign
 
 @dataclass
 class State:
-    """Keeps information about game round after check"""
+    """Keep information about game round after check."""
+
     status: GameStatus
-    sign: Sign = None
+    sign: Sign | None = None
 
 
 class GameState:
-    """Represents state of the game and provides an ability to change this state"""
+    """Represent state of the game and provides an ability to change this state."""
 
     def __init__(self, width: int = 3, height: int = 3) -> None:
+        """
+        Initialize games state.
+
+        Initializes game state field with default or passed width and heights
+
+        Args:
+            width (int, optional): Defaults to 3.
+            height (int, optional): Defaults to 3.
+
+        Raises:
+            IncorrectFieldSizeException: _description_
+        """
         if width != height or width % 2 == 0 or width < 3 or height < 3:
             raise IncorrectFieldSizeException(
                 'Field width and height should be equal')
@@ -35,7 +49,8 @@ class GameState:
                  GameState.make_pritty_array_str(self.field))
 
     def get_game_state(self) -> list[list[Sign]]:
-        """Retrieves and returns Game State
+        """
+        Retrieve and returns Game State.
 
         Returns:
             list: field with values
@@ -45,7 +60,8 @@ class GameState:
         return game_state
 
     def make_move(self, x_coordinate: int, y_coordinate: int, sign: Sign) -> None:
-        """Put a Sign (X or O) to the field with its coordinates x and y
+        """
+        Put a Sign (X or O) to the field with its coordinates x and y.
 
         Args:
             x (int): row of the field
@@ -64,7 +80,8 @@ class GameState:
                 f'Cell {x_coordinate}:{y_coordinate} already has a value')
 
     def is_cell_empty(self, x: int, y: int) -> bool:
-        """Check if the sell does have a value or not
+        """
+        Check if the sell does have a value or not.
 
         Args:
             x (int): row of the field
@@ -78,7 +95,8 @@ class GameState:
         return res
 
     def game_is_finished(self) -> State:
-        """Check if the game was finished or it is still alive
+        """
+        Check if the game was finished or it is still alive.
 
         Returns:
             tuple: (Bool, Sign)
@@ -86,7 +104,7 @@ class GameState:
         arrays_to_check = [arr for arr in self.field]
         arrays_to_check.append([self.field[i][i]
                                for i in range(len(self.field))])
-        arrays_to_check.append([self.field[i][len(self.field)-i-1]
+        arrays_to_check.append([self.field[i][len(self.field) - i - 1]
                                for i in range(len(self.field))])
         for i in range(len(self.field)):
             arr_to_append = []
@@ -110,8 +128,9 @@ class GameState:
         return State(game_status, None)
 
     @staticmethod
-    def check_line(line: list) -> tuple:
-        """Verifies if the each item in the line has the same value (excluding None values)
+    def check_line(line: list[Sign]) -> tuple[bool, Sign]:
+        """
+        Verify if the each item in the line has the same value (excluding None values).
 
         Args:
             line (list): array with values []
@@ -120,13 +139,15 @@ class GameState:
             tuple: (Bool, Sign) first value represents if the all values are equal, the second - value in the first position
         """
         first_item = line[0]
-        values = [item for item in line if item ==
-                  first_item and item is not None]
+        values = [item for item in line if item == first_item and item is not None]
         return (len(values) == len(line), first_item)
 
     @staticmethod
-    def make_pritty_array_str(array: list) -> str:
-        """Transforms and multy-dimension array (matrix) to the next view:
+    def make_pritty_array_str(array: list[list[Sign]]) -> str:
+        r"""
+        Transform multy-dimension array (matrix).
+
+        Transforms to the next view:
 
         Values1  Values2  Values3
         Values4  Values5  Values6
@@ -138,7 +159,7 @@ class GameState:
         Returns:
             str: "val\tval\tval\t\n...val\tval\tval\t\n"
         """
-        strings = []
+        strings: list[str] = []
         for row in array:
             for val in row:
                 strings.append(f'{val}\t')

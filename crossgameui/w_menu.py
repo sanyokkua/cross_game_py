@@ -1,29 +1,42 @@
-"""Represents a widget with Main Menu of Tic Tac Toe Game"""
+"""Represent a widget with Main Menu of Tic Tac Toe Game."""
 import logging as log
 import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
-from crossgameui.constants import *
+from crossgame.api.lang_provider import *
 from crossgameui.w_base import BaseAppWidget
 
 
 class TicTacToeUiMenuFrame(BaseAppWidget, ttk.Frame):
-    """Menu frame is a widget extetnded from ttk.Frame
-       Creates menu representation of game
-       Consists of:
-            Player 1 Name Label: Reset Game Button: Player 2 Name Label
-            Player 1 Name Entry: Start Game Button: Player 2 Name Entry
+    """
+    Menu frame is a widget extetnded from ttk.Frame.
+
+    Creates menu representation of game
+    Consists of:
+        Player 1 Name Label: Reset Game Button: Player 2 Name Label
+        Player 1 Name Entry: Start Game Button: Player 2 Name Entry
     Args:
         BaseAppWidget (_type_): Required for containing common properties and lan methods
         ttk (_type_): Frame
     """
 
     def __init__(self, app_lang: str, root_frame: ttk.Frame,
-                 var_pl_1_trace: Callable,
-                 var_pl_2_trace: Callable,
-                 btn_reset_command: Callable,
-                 btn_start_command: Callable) -> None:
+                 var_pl_1_trace: Callable[[object], None],
+                 var_pl_2_trace: Callable[[object], None],
+                 btn_reset_command: Callable[[], None],
+                 btn_start_command: Callable[[], None]) -> None:
+        """
+        Initialize Menu frame.
+
+        Args:
+            app_lang (str): language of the game
+            root_frame (ttk.Frame): root widget
+            var_pl_1_trace (Callable[[object], None]): callback for changes of the var player 1
+            var_pl_2_trace (Callable[[object], None]): callback for changes of the var player 2
+            btn_reset_command (Callable[[], None]): callback for clicked event reset button
+            btn_start_command (Callable[[], None]): callback for clicked event start button
+        """
         BaseAppWidget.__init__(self, app_lang=app_lang)
         ttk.Frame.__init__(self, root_frame)
 
@@ -71,7 +84,8 @@ class TicTacToeUiMenuFrame(BaseAppWidget, ttk.Frame):
             self.columnconfigure(col, weight=1)
 
     def change_entry_player_1_state(self, is_enabled: bool) -> None:
-        """Changes state of player 1 entry to the is_enabled bool value
+        """
+        Change state of player 1 entry to the is_enabled bool value.
 
         Args:
             is_enabled (bool): will be used to activate/disable entry
@@ -81,7 +95,8 @@ class TicTacToeUiMenuFrame(BaseAppWidget, ttk.Frame):
             [f'!{tk.DISABLED}' if is_enabled else tk.DISABLED])
 
     def change_entry_player_2_state(self, is_enabled: bool) -> None:
-        """Changes state of player 2 entry to the is_enabled bool value
+        """
+        Change state of player 2 entry to the is_enabled bool value.
 
         Args:
             is_enabled (bool): will be used to activate/disable entry
@@ -91,7 +106,8 @@ class TicTacToeUiMenuFrame(BaseAppWidget, ttk.Frame):
             [f'!{tk.DISABLED}' if is_enabled else tk.DISABLED])
 
     def change_button_start_state(self, is_enabled: bool) -> None:
-        """Changes state of start game button to the is_enabled bool value
+        """
+        Change state of start game button to the is_enabled bool value.
 
         Args:
             is_enabled (bool): will be used to activate/disable button

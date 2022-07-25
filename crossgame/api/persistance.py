@@ -1,4 +1,5 @@
-"""Module contains logic to manage game state
+"""
+Module contains logic to manage game state.
 
     Raises:
         GameNotFoundException: raised if the game_id is not found
@@ -14,22 +15,31 @@ from crossgame.logic.game import TicTacToeGame
 
 
 class SavedGameInfo:
-    """SavedGameInfo is a object that contains information for saving in the scope of the session"""
+    """SavedGameInfo is a object that contains information for saving in the scope of the session."""
 
     def __init__(self, game_id: str, players: list[Player], game: TicTacToeGame = None) -> None:
+        """
+        Initialize SavedGameInfo object.
+
+        Args:
+            game_id (str): game ID
+            players (list[Player]): player name list
+            game (TicTacToeGame, optional): current game. Defaults to None.
+        """
         self.game: TicTacToeGame = game
         self.players: list[Player] = players
         self.game_id: str = game_id
 
 
 class GameStatePersistance:
-    """STUB persistance service that works in memory"""
+    """STUB persistance service that works in memory."""
 
     def __init__(self) -> None:
-        self.game_info_dict = {}
+        self.game_info_dict: dict[str, SavedGameInfo] = {}
 
     def save_game_info(self, game_id: str, game_info: SavedGameInfo) -> None:
-        """Saves game info 
+        """
+        Save game info.
 
         Args:
             game_id (str): unique id of the game session
@@ -38,7 +48,8 @@ class GameStatePersistance:
         self.game_info_dict[game_id] = game_info
 
     def get_game_info(self, game_id: str) -> SavedGameInfo:
-        """Retrieves game info
+        """
+        Retrieve game info.
 
         Args:
             game_id (str): unique id of the game session
@@ -49,17 +60,18 @@ class GameStatePersistance:
         Returns:
             SavedGameInfo: information about saved game session
         """
-        if not game_id in self.game_info_dict:
+        if game_id not in self.game_info_dict:
             raise GameNotFoundException(f'Game with id {game_id} is not found')
         return self.game_info_dict.get(game_id)
 
     def remove_game_info(self, game_id: str) -> None:
-        """Removes game info
+        """
+        Remove game info.
 
         Args:
             game_id (str): unique id of the game session
         """
-        if not game_id in self.game_info_dict:
+        if game_id not in self.game_info_dict:
             log.warning(
                 'Game with %s id is not found, will be skipped', game_id)
         else:

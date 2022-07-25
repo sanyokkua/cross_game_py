@@ -1,15 +1,17 @@
-"""This Module will contain Objects required for fields"""
+"""This Module will contain Objects required for fields."""
 import enum
 
 
 class Sign(enum.Enum):
-    """This enum contains possible values for the Game Tic-Tac-Toe"""
+    """This enum contains possible values for the Game Tic-Tac-Toe."""
+
     X = 1
     O = 2
 
 
 class GameStatus(enum.Enum):
-    """Indicates game status
+    """
+    Indicatee game status.
 
     Args:
         enum (_type_): GameStatus

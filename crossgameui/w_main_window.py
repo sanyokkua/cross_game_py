@@ -1,20 +1,20 @@
-"""Represents main window module of the game"""
+"""Represents main window module of the game."""
 import logging as log
 import tkinter as tk
 from tkinter import NSEW, messagebox, ttk
 
 from crossgame.api.controller import Controller
 from crossgame.api.persistance import GameStatePersistance
-from crossgame.logic.game import WinnerInfo
+from crossgame.logic.game import GameStateDto, WinnerInfo
 from crossgame.logic.game_enums import Sign
-
 from crossgameui.w_base import BaseAppWidget
 from crossgameui.w_field import TicTacToeUiFieldFrame
 from crossgameui.w_menu import TicTacToeUiMenuFrame
 
 
 class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
-    """Represents main window (frame) of the Tic Tac Toe Game
+    """
+    Represent main window (frame) of the Tic Tac Toe Game.
 
     Args:
         BaseAppWidget (_type_): Required for containing common properties and lan methods
@@ -22,14 +22,15 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
     """
 
     def __init__(self, app_lang: str, root: tk.Tk) -> None:
+        """Initialize Game App."""
         BaseAppWidget.__init__(self, app_lang=app_lang)
         ttk.Frame.__init__(self, root)
 
         self.game_persistence = GameStatePersistance()
         self.controller = Controller(self.game_persistence)
-        self.latest_state = None
+        self.latest_state: GameStateDto | None = None
 
-        root.title = self.get_text_app_name()
+        root.wm_title(self.get_text_app_name())
         self.frame_menu = TicTacToeUiMenuFrame(app_lang=app_lang, root_frame=self,
                                                var_pl_1_trace=self.var_player_1_name,
                                                var_pl_2_trace=self.var_player_2_name,
@@ -53,19 +54,20 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
             self.columnconfigure(col, weight=1)
 
     def var_player_1_name(self, *args) -> None:
-        """Triggered by entry var variable changes on Player 1 entry field
-        """
+        """Triggered by entry var variable changes on Player 1 entry field."""
         self.enable_button_start()
 
     def var_player_2_name(self, *args) -> None:
-        """Triggered by entry var variable changes on Player 2 entry field
-        """
+        """Triggered by entry var variable changes on Player 2 entry field."""
         self.enable_button_start()
 
     def enable_button_start(self) -> None:
-        """Checks values of player names and if they are not empty enables start button
-           if the both or at least one entry doesn't have a value - start button will be
-           disabled
+        """
+        Check values of player names.
+
+        If values are not empty -> enables start button
+        If the both or at least one entry doesn't have a value -> start button will be
+        disabled.
         """
         if self.frame_menu.var_player_1_name.get().strip() and self.frame_menu.var_player_2_name.get().strip():
             self.frame_menu.change_button_start_state(is_enabled=True)
@@ -73,9 +75,12 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
             self.frame_menu.change_button_start_state(is_enabled=False)
 
     def button_reset_game(self) -> None:
-        """If this method called, the game field will be cleaned up,
-           player name entries will be cleaned up,
-           start game button will be disabled
+        """
+        Cleanup game session.
+
+        If this method called, the game field will be cleaned up,
+        player name entries will be cleaned up,
+        start game button will be disabled
         """
         self.frame_menu.change_button_start_state(is_enabled=False)
         self.frame_menu.var_player_1_name.set('')
@@ -86,8 +91,11 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         self.frame_field.clear_field()
 
     def button_start_game(self) -> None:
-        """Fetches values of player names and create new game session
-           Disables start button after game was started
+        """
+        Prepare and start game.
+
+        Fetches values of player names and create new game session
+        Disables start button after game was started
         """
         self.frame_menu.change_entry_player_1_state(is_enabled=False)
         self.frame_menu.change_entry_player_2_state(is_enabled=False)
@@ -101,7 +109,8 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         self.frame_field.build_field_view(self.latest_state.field)
 
     def on_field_click_command(self, row: int, col: int, button: ttk.Button):
-        """It is a handler of the field button clicked event
+        """
+        It is a handler of the field button clicked event.
 
         Args:
             row (int): row of the button
@@ -110,7 +119,7 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         """
         log.debug('on_field_button_click')
         button.state([f'{tk.DISABLED}'])
-        text: str = None
+        text: str | None = None
         if Sign.X is self.latest_state.active_player.sign:
             text = 'X'
         else:
@@ -122,8 +131,9 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
             self.frame_field.disable_fields()
             self.notify_game_result(self.latest_state.winner)
 
-    def notify_game_result(self, winner: WinnerInfo):
-        """Will start the process of notifying about game results
+    def notify_game_result(self, winner: WinnerInfo) -> None:
+        """
+        Will start the process of notifying about game results.
 
         Args:
             winner (WinnerInfo): Represents game status after its end
@@ -137,13 +147,15 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         self.after(ms=200, func=(lambda: self.end_game_notify_dialog(text)))
 
     def end_game_notify_dialog(self, message: str):
-        """Displays dialog window with notification about finished game result
-           and asks if the players want to start again
+        """
+        Display dialog window with notification about finished game result.
+
+        Aasks if the players want to start again
 
         Args:
             message (str): Message that will be displayed
         """
-        is_yes = messagebox.askokcancel(
+        is_yes: bool = messagebox.askokcancel(
             title=self.get_text_finished_msg_box(), message=message)
         if is_yes:
             self.frame_menu.change_button_start_state(is_enabled=True)

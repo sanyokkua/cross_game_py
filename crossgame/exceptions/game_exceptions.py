@@ -1,8 +1,9 @@
-"""Game Exceptions"""
+"""Game Exceptions."""
 
 
 class CellIsAlreadyBusyException(Exception):
-    """CellIsAlreadyBusyException
+    """
+    CellIsAlreadyBusyException.
 
     Args:
         Exception (_type_): CellIsAlreadyBusyException
@@ -13,7 +14,8 @@ class CellIsAlreadyBusyException(Exception):
 
 
 class IncorrectFieldSizeException(Exception):
-    """IncorrectFieldSizeException
+    """
+    IncorrectFieldSizeException.
 
     Args:
         Exception (_type_): IncorrectFieldSizeException
@@ -24,7 +26,8 @@ class IncorrectFieldSizeException(Exception):
 
 
 class GameIdException(Exception):
-    """GameIdException
+    """
+    GameIdException.
 
     Args:
         Exception (_type_): GameIdException
@@ -35,7 +38,8 @@ class GameIdException(Exception):
 
 
 class NumberOfPlayersException(Exception):
-    """NumberOfPlayersException
+    """
+    NumberOfPlayersException.
 
     Args:
         Exception (_type_): NumberOfPlayersException
@@ -46,7 +50,8 @@ class NumberOfPlayersException(Exception):
 
 
 class GameNotFoundException(Exception):
-    """Raised when game is concrete id is not created (doesn't exist in the DB)
+    """
+    Raised when game is concrete id is not created (doesn't exist in the DB).
 
     Args:
         Exception (_type_): GameNotFoundException
@@ -57,7 +62,10 @@ class GameNotFoundException(Exception):
 
 
 class CurrentPlayerCantMakeAmoveException(Exception):
-    """This exception can be raised if player doesn't have permission to make a move (not active)
+    """
+    Represent current user error.
+
+    This exception can be raised if player doesn't have permission to make a move (not active)
     or if current player have used wrong column and/or row
 
     Args:
@@ -69,7 +77,8 @@ class CurrentPlayerCantMakeAmoveException(Exception):
 
 
 class PlayerNotFoundException(Exception):
-    """Raised when player is not found in the list of players
+    """
+    Raised when player is not found in the list of players.
 
     Args:
         Exception (_type_): _description_

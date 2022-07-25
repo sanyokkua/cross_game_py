@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 120
+# it's not a bug that we aren't using all of hacking
+ignore =
+    # H101: Use TODO(NAME)
+    H101

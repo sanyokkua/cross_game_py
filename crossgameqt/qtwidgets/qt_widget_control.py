@@ -1,24 +1,35 @@
+"""Module Contains main Class with Control Widget Implementation."""
 import logging as log
 import os
 import sys
-from typing import Callable
 
-from crossgame.api.controller import Controller
-from crossgame.logic.game import GameStateDto, WinnerInfo
-from crossgame.logic.game_enums import Sign
-from crossgameqt.qtwidgets.qt_widget_field import TicTacToeFieldWidget
 from PyQt6.QtCore import QSize, QTimer
 from PyQt6.QtGui import QAction, QIcon, QPixmap
 from PyQt6.QtWidgets import (QGridLayout, QGroupBox, QLabel, QLineEdit,
                              QMainWindow, QMenu, QMessageBox, QPushButton,
                              QSizePolicy, QVBoxLayout, QWidget)
 
+from crossgame.api.controller import Controller
+from crossgame.logic.game import WinnerInfo
+from crossgame.logic.game_enums import Sign
+from crossgameqt.qtwidgets.qt_widget_field import TicTacToeFieldWidget
+
 
 class TicTacToeControlWidget(QMainWindow):
-    def __init__(self, controller: Controller, on_state_update: Callable[[GameStateDto], None]) -> None:
+    """_summary_
+
+    Args:
+        QMainWindow (_type_): _description_
+    """
+
+    def __init__(self, controller: Controller) -> None:
+        """_summary_
+
+        Args:
+            controller (Controller): _description_
+        """
         super().__init__()
         self.controller = controller
-        self.on_state_update: Callable[[GameStateDto], None] = on_state_update
 
         self.base_dir = os.getcwd()
         self.img_cross: QIcon = QIcon(
