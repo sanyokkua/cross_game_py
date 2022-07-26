@@ -66,11 +66,34 @@ python -m build
 ```Shell
 pip install dist/crossgame-0.0.1-py3-none-any.whl
 ```
-7) Run the game
+7) Run the game (from the root folder of the repository)
 - Console App
+```Shell
+python -m crossgame.main
+```
 - Tkinter App
+```Shell
+python -m crossgameui.app
+```
 - QT6 App
+```Shell
+python -m crossgameqt.qtapp
+```
 8) If it is required, Project has unittests for the Game "Engine" (Base classes with the game logic)
 ```Shell
 python -m unittest discover tests -v
+```
+9) Make executable for your OS
+TODO: Fix Loading of the Resources (--add-data 'resources/:./resources' or change a way of loading resources)
+- Console App
+```Shell
+pyinstaller --onefile --windowed crossgame/main.py
+```
+- Tkinter App
+```Shell
+pyinstaller --onefile --windowed crossgameui/app.py
+```
+- QT6 App
+```Shell
+pyinstaller --onefile --windowed crossgameqt/qtapp.py
 ```

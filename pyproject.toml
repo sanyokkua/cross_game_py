@@ -45,6 +45,7 @@ development = [
     "flake8-quotes",
     "flake8-mutable",
     "isort",
+    "pyinstaller", # Can create an executable single app for Windows, Mac OS, Linux and some other OS
     # "PyQt6-stubs",
 ]
 
