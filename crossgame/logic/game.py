@@ -25,8 +25,8 @@ from crossgame.logic.state import GameState
 class WinnerInfo:
     """Keep information about winner such as Player and Sign (X or O)."""
 
-    player: Player | None
-    sign: Sign | None
+    player: Player
+    sign: Sign
     is_draw: bool = False
 
 
@@ -36,9 +36,9 @@ class GameStateDto:
 
     game_id: str
     player_names: list[str]
-    active_player: Player | None = None
-    field: list[list[str | None]] | None = None
-    winner: WinnerInfo | None = None
+    active_player: Player = None
+    field: list[list[Sign]] = None
+    winner: WinnerInfo = None
 
 
 class TicTacToeGame:
@@ -99,13 +99,13 @@ class TicTacToeGame:
         for player in self.players:
             if player.player_id == player_id:
                 return player
-        raise PlayerNotFoundException(f"Player with {player_id} is not found")
+        raise PlayerNotFoundException(f'Player with {player_id} is not found')
 
     def __get_other_player(self, player_id: str) -> Player:
         for player in self.players:
             if player.player_id != player_id:
                 return player
-        raise PlayerNotFoundException(f"Player with {player_id} is not found")
+        raise PlayerNotFoundException(f'Player with {player_id} is not found')
 
     def __get_active_player(self) -> Player:
         for player in self.players:
@@ -135,7 +135,7 @@ class TicTacToeGame:
         self.game_status = GameStatus.FINISHED
         if GameStatus.FINISHED == state.status:
             self.winner = WinnerInfo(
-                self.__get_player_by_sign(state.sign), state.sign)
+                self.__get_player_by_sign(state.sign), state.sign)  # type: ignore
             return GameStateDto(self.game_id, player_names_list, active_player, self.get_field(), self.winner)
         elif GameStatus.DRAW == state.status:
             self.winner = WinnerInfo(None, None, True)
@@ -144,17 +144,19 @@ class TicTacToeGame:
             return GameStateDto(self.game_id, player_names_list, active_player, self.get_field())
 
     def get_field(self) -> list[list[Sign]]:
-        """
-        Return a copy of the game field (matrix).
-
-        Returns:
-            _type_: [[]]
-        """
+        """Return a copy of the game field (matrix)."""
         return self.game_state.get_game_state()
 
 
 class TicTacToeGameClassic(TicTacToeGame):
-    """Classic Tic-Tac-Toe game implementation"""
+    """Classic Tic-Tac-Toe game implementation."""
 
     def __init__(self, game_id: str, players: list[Player]) -> None:
+        """
+        Init Classic game implementation.
+
+        Args:
+            game_id (str): Unique Game ID
+            players (list[Player]): List of the Players
+        """
         TicTacToeGame.__init__(self, game_id, players, 3, 3)

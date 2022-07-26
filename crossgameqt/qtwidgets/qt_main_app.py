@@ -10,17 +10,13 @@ from crossgameqt.qtwidgets.qt_widget_control import TicTacToeControlWidget
 
 
 class TicTacToeQtApp(QApplication):
-    """TicTacToeQtApp is a main class that contains logic of running Application.
+    """TicTacToeQtApp is a main class that contains logic of running Application."""
 
-    Args:
-        QApplication (_type_): No Arguments is requred
-    """
-
-    def __init__(self):
+    def __init__(self, game_lang: str) -> None:
         """Initialize Application."""
         super().__init__([])
         log.debug('TicTacToeQtApp.__init__')
         self.game_persistence = GameStatePersistance()
         self.controller = Controller(self.game_persistence)
-        self.w_control = TicTacToeControlWidget(self.controller)
+        self.w_control = TicTacToeControlWidget(self.controller, game_lang)
         self.w_control.show()

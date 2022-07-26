@@ -10,12 +10,8 @@ class Sign(enum.Enum):
 
 
 class GameStatus(enum.Enum):
-    """
-    Indicatee game status.
+    """Indicatee game status."""
 
-    Args:
-        enum (_type_): GameStatus
-    """
     IN_PROGRESS = 1
     FINISHED = 2
     DRAW = 3

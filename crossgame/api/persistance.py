@@ -35,6 +35,7 @@ class GameStatePersistance:
     """STUB persistance service that works in memory."""
 
     def __init__(self) -> None:
+        """Initialize Game State Persistance Stub."""
         self.game_info_dict: dict[str, SavedGameInfo] = {}
 
     def save_game_info(self, game_id: str, game_info: SavedGameInfo) -> None:
@@ -62,7 +63,7 @@ class GameStatePersistance:
         """
         if game_id not in self.game_info_dict:
             raise GameNotFoundException(f'Game with id {game_id} is not found')
-        return self.game_info_dict.get(game_id)
+        return self.game_info_dict.get(game_id)  # type: ignore
 
     def remove_game_info(self, game_id: str) -> None:
         """

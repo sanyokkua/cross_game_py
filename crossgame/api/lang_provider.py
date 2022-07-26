@@ -3,14 +3,16 @@
 import configparser
 import os
 
-TEXT_APP_NAME = 'app_win_name_text'
-TEXT_GAME_FINISHED_MESSAGE_BOX = 'game_finished_msg_box_text'
-TEXT_GAME_FINISHED_WIN = 'game_finished_win_text'
-TEXT_GAME_FINISHED_DRAW = 'game_finished_draw_text'
-TEXT_LABEL_PLAYER_1_NAME = 'text_lbl_pl_1_name'
-TEXT_LABEL_PLAYER_2_NAME = 'text_lbl_pl_2_name'
-TEXT_BUTTON_RESET = 'text_btn_res'
-TEXT_BUTTON_START = 'text_btn_start'
+TEXT_APP_NAME: str = 'app_win_name_text'
+TEXT_GAME_FINISHED_MESSAGE_BOX: str = 'game_finished_msg_box_text'
+TEXT_GAME_FINISHED_WIN: str = 'game_finished_win_text'
+TEXT_GAME_FINISHED_DRAW: str = 'game_finished_draw_text'
+TEXT_LABEL_PLAYER_1_NAME: str = 'text_lbl_pl_1_name'
+TEXT_LABEL_PLAYER_2_NAME: str = 'text_lbl_pl_2_name'
+TEXT_BUTTON_RESET: str = 'text_btn_res'
+TEXT_BUTTON_START: str = 'text_btn_start'
+TEXT_MENU_GAME: str = 'text_menu'
+TEXT_MENU_EXIT: str = 'text_exit_game'
 
 
 class LangProvider:
@@ -116,3 +118,21 @@ class LangProvider:
             str: property value
         """
         return self.get_text_var(TEXT_BUTTON_START, 'Start')
+
+    def get_text_menu(self) -> str:
+        """
+        Return text for menu.
+
+        Returns:
+            str: property value
+        """
+        return self.get_text_var(TEXT_MENU_GAME, 'Menu')
+
+    def get_text_menu_exit(self) -> str:
+        """
+        Return text for menu exit.
+
+        Returns:
+            str: property value
+        """
+        return self.get_text_var(TEXT_MENU_EXIT, 'Exit')

@@ -10,6 +10,7 @@ class CellIsAlreadyBusyException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)
 
 
@@ -22,6 +23,7 @@ class IncorrectFieldSizeException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)
 
 
@@ -34,6 +36,7 @@ class GameIdException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)
 
 
@@ -46,6 +49,7 @@ class NumberOfPlayersException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)
 
 
@@ -58,6 +62,7 @@ class GameNotFoundException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)
 
 
@@ -73,6 +78,7 @@ class CurrentPlayerCantMakeAmoveException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)
 
 
@@ -85,4 +91,5 @@ class PlayerNotFoundException(Exception):
     """
 
     def __init__(self, *args: object) -> None:
+        """Initialize Exception."""
         Exception.__init__(self, *args)

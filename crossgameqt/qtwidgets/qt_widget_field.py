@@ -1,3 +1,5 @@
+"""Module represents class with Game Field QT implementation."""
+
 import logging as log
 from typing import Callable
 
@@ -9,8 +11,17 @@ from crossgame.logic.game_enums import Sign
 
 
 class TicTacToeFieldWidget(QWidget):
+    """Define main Field QT Widget for game."""
+
     def __init__(self, on_field_click: Callable[[int, int, QPushButton], None]) -> None:
-        super().__init__()
+        """
+        Initialize Field Widget.
+
+        Args:
+            on_field_click (Callable[[int, int, QPushButton], None]): callback function
+                                                        for clicked buttons in the field
+        """
+        QWidget.__init__(self)
         self.on_field_click = on_field_click
         self.field_buttons: list[list[QPushButton]] = []
         self.main_layout: QVBoxLayout = None
@@ -18,7 +29,8 @@ class TicTacToeFieldWidget(QWidget):
         self.field_group_layout: QGridLayout = None
         self._init_view()
 
-    def _init_view(self):
+    def _init_view(self) -> None:
+        """Initialize View of the Widget."""
         self.main_layout = QVBoxLayout()
         self.field_group = QGroupBox()
         self.field_group_layout = QGridLayout()
@@ -26,7 +38,15 @@ class TicTacToeFieldWidget(QWidget):
         self.main_layout.addWidget(self.field_group)
         self.setLayout(self.main_layout)
 
-    def build_field_view(self, field: list[list[Sign]]):
+    def build_field_view(self, field: list[list[Sign]]) -> None:
+        """
+        Build view for passed field.
+
+        Initializes GRID of buttons for game field.
+
+        Args:
+            field (list[list[Sign]]): Game Field representation as array Matrix
+        """
         log.debug('build_field_view()')
         size_policy = QSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -50,12 +70,14 @@ class TicTacToeFieldWidget(QWidget):
             self.field_group_layout.setRowMinimumHeight(cur_row, 100)
             cur_row += 1
 
-    def disable_fields(self):
+    def disable_fields(self) -> None:
+        """Disable all the buttons in the GRID."""
         for row_buttons in self.field_buttons:
             for button in row_buttons:
                 button.setEnabled(False)
 
-    def clear_field(self):
+    def clear_field(self) -> None:
+        """Remove all the buttons from the GRID."""
         for row_buttons in self.field_buttons:
             for button in row_buttons:
                 button.setIcon(QIcon())

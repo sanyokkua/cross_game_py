@@ -11,12 +11,7 @@ from crossgame.logic.game_enums import Sign
 
 
 class PlayerType(Enum):
-    """
-    Type of the player that will be used for creating of the game.
-
-    Args:
-        Enum (_type_): PlayerType
-    """
+    """Type of the player that will be used for creating of the game."""
 
     PLAYER = 1
     AI_EASY = 2
@@ -91,7 +86,7 @@ class Controller:
         game_info.game = TicTacToeGameClassic(game_id, game_info.players)
         self.persistance.save_game_info(game_id, game_info)
         game_state = game_info.game.get_game_state()
-        log.debug('Started game session, game_id %s', game_id)
+        log.debug('start_game, game_id %s', game_id)
         return game_state
 
     def make_move(self, game_id: str, player_id: str, row: int, column: int) -> GameStateDto:
@@ -111,7 +106,7 @@ class Controller:
         current_game.game.make_move(player_id, row, column)
         self.persistance.save_game_info(game_id, current_game)
         game_state = current_game.game.get_game_state()
-        log.debug('Started game session, game_id %s', game_id)
+        log.debug('make_move, game_id %s', game_id)
         return game_state
 
     def get_status(self, game_id: str) -> GameStateDto:
@@ -126,5 +121,5 @@ class Controller:
         """
         current_game = self.persistance.get_game_info(game_id)
         game_state = current_game.game.get_game_state()
-        log.debug('Started game session, game_id %s', game_id)
+        log.debug('get_status, game_id %s', game_id)
         return game_state

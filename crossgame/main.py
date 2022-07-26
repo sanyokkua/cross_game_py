@@ -1,17 +1,20 @@
+"""Module represent Console version of the game."""
+
 from crossgame.api.controller import Controller
 from crossgame.api.persistance import GameStatePersistance
 from crossgame.api.player import Player
 from crossgame.logic.game import GameStateDto
 
 
-def new_game():
-    print("New Game")
+def new_game() -> None:
+    """Start the console version of the game."""
+    print('New Game')
     game_persistence = GameStatePersistance()
     controller = Controller(game_persistence)
-    print("Player 1 enter the name:")
+    print('Player 1 enter the name:')
     player_1_name = input()
     start_game_state = controller.start_game_session(player_1_name)
-    print("Player 2 enter the name:")
+    print('Player 2 enter the name:')
     player_2_name = input()
     join_game_state = controller.join_to_game_game_session(
         player_2_name, start_game_state.game_id)
@@ -34,10 +37,10 @@ def new_game():
 
         if state_after_move.winner:
             print(
-                f"player {state_after_move.winner.player} is won with sign {state_after_move.winner.sign}")
+                f'player {state_after_move.winner.player} is won with sign {state_after_move.winner.sign}')
             break
         else:
-            print("Next move")
+            print('Next move')
 
 
 new_game()

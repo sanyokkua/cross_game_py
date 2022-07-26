@@ -1,6 +1,6 @@
 """Module Contains main Class with Control Widget Implementation."""
+
 import logging as log
-import os
 import sys
 
 from PyQt6.QtCore import QSize, QTimer
@@ -10,32 +10,25 @@ from PyQt6.QtWidgets import (QGridLayout, QGroupBox, QLabel, QLineEdit,
                              QSizePolicy, QVBoxLayout, QWidget)
 
 from crossgame.api.controller import Controller
+from crossgame.api.lang_provider import LangProvider
 from crossgame.logic.game import WinnerInfo
 from crossgame.logic.game_enums import Sign
 from crossgameqt.qtwidgets.qt_widget_field import TicTacToeFieldWidget
 
 
-class TicTacToeControlWidget(QMainWindow):
-    """_summary_
+class TicTacToeControlWidget(LangProvider, QMainWindow):
+    """Class represents main app widget with all controls."""
 
-    Args:
-        QMainWindow (_type_): _description_
-    """
-
-    def __init__(self, controller: Controller) -> None:
-        """_summary_
-
-        Args:
-            controller (Controller): _description_
-        """
-        super().__init__()
+    def __init__(self, controller: Controller, app_lang: str) -> None:
+        """Initialize Main Control widget."""
+        LangProvider.__init__(self, app_lang=app_lang)
+        QMainWindow.__init__(self)
+        # super().__init__()
         self.controller = controller
-
-        self.base_dir = os.getcwd()
         self.img_cross: QIcon = QIcon(
-            QPixmap(f"{self.base_dir}/resources/img/img_cross.png"))
+            QPixmap(f'{self.base_dir}/resources/img/img_cross.png'))
         self.img_zero: QIcon = QIcon(
-            QPixmap(f"{self.base_dir}/resources/img/img_zero.png"))
+            QPixmap(f'{self.base_dir}/resources/img/img_zero.png'))
 
         self.field_widget: TicTacToeFieldWidget = TicTacToeFieldWidget(
             self.on_field_button_click)
@@ -46,7 +39,7 @@ class TicTacToeControlWidget(QMainWindow):
         self.line_edit_pl_2: QLineEdit = None
         self.button_start: QPushButton = None
 
-        self.setWindowTitle('Tic Tac Toe QT Game')
+        self.setWindowTitle(self.get_text_app_name())
         size = QSize(200, 500)
         self.setMinimumSize(size)
         self.setBaseSize(size)
@@ -56,10 +49,10 @@ class TicTacToeControlWidget(QMainWindow):
 
     def _init_menu(self) -> None:
         menu_bar = self.menuBar()
-        menu_game = QMenu('Game', menu_bar)
+        menu_game = QMenu(self.get_text_menu(), menu_bar)
 
-        action_reset = QAction('Reset Game', menu_game)
-        action_exit = QAction('Exit Game', menu_game)
+        action_reset = QAction(self.get_text_btn_reset(), menu_game)
+        action_exit = QAction(self.get_text_menu_exit(), menu_game)
 
         action_reset.triggered.connect(self.on_reset_game)
         action_exit.triggered.connect(self.on_exit_game)
@@ -71,11 +64,11 @@ class TicTacToeControlWidget(QMainWindow):
         self.control_widget_group = QGroupBox()
         grid_layout_group = QGridLayout()
 
-        self.label_player_1 = QLabel('Player 1')
-        self.label_player_2 = QLabel('Player 2')
+        self.label_player_1 = QLabel(self.get_text_lbl_player_1())
+        self.label_player_2 = QLabel(self.get_text_lbl_player_2())
         self.line_edit_pl_1 = QLineEdit()
         self.line_edit_pl_2 = QLineEdit()
-        self.button_start = QPushButton('Start Game')
+        self.button_start = QPushButton(self.get_text_btn_start())
         self.button_start.setEnabled(False)
 
         self.line_edit_pl_1.textChanged.connect(self.on_player_1_name_change)
@@ -113,9 +106,11 @@ class TicTacToeControlWidget(QMainWindow):
         self.setCentralWidget(main_widget)
 
     def on_exit_game(self) -> None:
+        """Exit from the game."""
         sys.exit()
 
     def on_reset_game(self) -> None:
+        """Reset game state."""
         log.debug('on_reset_game')
         self.button_start.setEnabled(False)
         self.line_edit_pl_1.setText('')
@@ -126,14 +121,27 @@ class TicTacToeControlWidget(QMainWindow):
         self.field_widget.clear_field()
 
     def on_player_1_name_change(self, text: str) -> None:
+        """
+        Process text change event for player 1 input.
+
+        Args:
+            text (str): Changed text
+        """
         log.debug('on_player_1_name_change: %s', text)
         self.enable_button_start()
 
     def on_player_2_name_change(self, text: str) -> None:
+        """
+        Process text change event for player 2 input.
+
+        Args:
+            text (str): Changed text
+        """
         log.debug('on_player_2_name_change: %s', text)
         self.enable_button_start()
 
     def on_game_start_button_push(self) -> None:
+        """Process On Button click event and start the game."""
         log.debug('on_game_start_button_push')
         self.line_edit_pl_1.setEnabled(False)
         self.line_edit_pl_2.setEnabled(False)
@@ -149,9 +157,9 @@ class TicTacToeControlWidget(QMainWindow):
             self.latest_state.game_id)
 
         self.field_widget.build_field_view(self.latest_state.field)
-        self.on_state_update(self.latest_state)  # TODO: remove
 
     def enable_button_start(self) -> None:
+        """Process data from inputs and change Start Button State."""
         log.debug('enable_button_start')
         name_1 = self.line_edit_pl_1.text()
         name_2 = self.line_edit_pl_2.text()
@@ -163,6 +171,14 @@ class TicTacToeControlWidget(QMainWindow):
             log.debug('enable_button_start --> False')
 
     def on_field_button_click(self, row: int, col: int, button: QPushButton) -> None:
+        """
+        Process on field button click event.
+
+        Args:
+            row (int): button row
+            col (int): button col
+            button (QPushButton): Button that was clicked
+        """
         log.debug('on_field_button_click, row: %d, col: %d', row, col)
         button.setEnabled(False)
         img: QIcon = None  # Can be used to put on button after click
@@ -177,15 +193,27 @@ class TicTacToeControlWidget(QMainWindow):
             self.field_widget.disable_fields()
             self.notify_game_result(self.latest_state.winner)
 
-    def notify_game_result(self, winner: WinnerInfo):
+    def notify_game_result(self, winner: WinnerInfo) -> None:
+        """
+        Prepare notification about finished game results.
+
+        Args:
+            winner (WinnerInfo): Game Winner Information
+        """
         text = None
         if winner.is_draw:
-            text = 'DRAW'
+            text = self.get_text_finished_draw()
         else:
-            text = f'Winner - {winner.sign.name}'
+            text = f'{self.get_text_finished_win()} - {winner.sign.name}'
         QTimer.singleShot(500, lambda: self.end_game_notify_dialog(text))
 
-    def end_game_notify_dialog(self, message: str):
+    def end_game_notify_dialog(self, message: str) -> None:
+        """
+        Notify about finished game.
+
+        Args:
+            message (str): Text to be displayed
+        """
         msg = QMessageBox()
         msg.setText(message)
         msg.setStandardButtons(

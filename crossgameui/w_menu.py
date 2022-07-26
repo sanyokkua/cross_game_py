@@ -4,7 +4,6 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Callable
 
-from crossgame.api.lang_provider import *
 from crossgameui.w_base import BaseAppWidget
 
 

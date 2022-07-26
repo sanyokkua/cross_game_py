@@ -1,4 +1,3 @@
-
 class BaseAI:
     """_summary_
     """

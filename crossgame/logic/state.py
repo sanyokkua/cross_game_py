@@ -1,12 +1,9 @@
 """
 Represent Tic-Tac-Toe Game State.
 
-    Raises:
-        IncorrectFieldSize: can be raised if class initialized with incorrect params
-        CellIsAlreadyBusy: can be raised if will be a try to put value in the cell that already has a value
-
-    Returns:
-        _type_: Game State
+Raises:
+    IncorrectFieldSize: can be raised if class initialized with incorrect params
+    CellIsAlreadyBusy: can be raised if will be a try to put value in the cell that already has a value
 """
 import logging as log
 from dataclasses import dataclass
@@ -103,9 +100,9 @@ class GameState:
         """
         arrays_to_check = [arr for arr in self.field]
         arrays_to_check.append([self.field[i][i]
-                               for i in range(len(self.field))])
+                                for i in range(len(self.field))])
         arrays_to_check.append([self.field[i][len(self.field) - i - 1]
-                               for i in range(len(self.field))])
+                                for i in range(len(self.field))])
         for i in range(len(self.field)):
             arr_to_append = []
             for j in range(len(self.field)):
