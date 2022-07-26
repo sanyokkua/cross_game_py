@@ -33,5 +33,44 @@ Also, here will be used build and distribution tools for packaging this project
 The current structure of the project:
 - ./crossgame - Main module with all the logic and basic console app
 - ./crossgameui - Module with the implementation of the simple Tkinter UI
+- ./crossgameqt - Mpdule with the implementation of the simple QT6 UI
 - ./resources - folder with any static resources that can be used in the app
 - ./tests - unit tests (currently only for the Main module)
+- ./pyproject.toml - all the meta information about project, including development dependencies
+- ./setup.cfg - contains information about version, URL and where to find resources for the build
+- ./.flake8 - config for linter
+- ./create_venv.sh - helper script to create venv and activate it. Testend only on Mac OS
+
+## How to build and install
+1) Install Virtual Environment in order to install it locally, without installing package and dependencies globally
+```Shell
+python3 -m venv .venv
+```
+2) Activate in the current console session Virtual Environment
+```Shell
+source .venv/bin/activate
+```
+3) Install Build Package
+```Shell
+pip install build
+```
+4) Install All the development Packages if it is reqiured
+```Shell
+pip install -e ".[development]"
+```
+5) Build the Project
+```Shell
+python -m build
+```
+6) Install package
+```Shell
+pip install dist/crossgame-0.0.1-py3-none-any.whl
+```
+7) Run the game
+- Console App
+- Tkinter App
+- QT6 App
+8) If it is required, Project has unittests for the Game "Engine" (Base classes with the game logic)
+```Shell
+python -m unittest discover tests -v
+```

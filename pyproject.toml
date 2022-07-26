@@ -45,7 +45,7 @@ development = [
     "flake8-quotes",
     "flake8-mutable",
     "isort",
-    "PyQt6-stubs",
+    # "PyQt6-stubs",
 ]
 
 [project.scripts]
