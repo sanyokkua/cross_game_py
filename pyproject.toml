@@ -1,75 +1,52 @@
-#Definition of build process of the package. https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
-[build-system]
-# Here should be placed build system with optional version
-requires = ["setuptools>=58.1.0"]
-build-backend = "setuptools.build_meta" #Definition of the build system
-
-#Definition of Project Meta-Data
-[project]
-name = "crossgame"                                            #Name of the package that will be built and installed. A valid name consists only of ASCII letters and numbers, period, underscore and hyphen
+[tool.poetry]
+name = "cross_game_py"
+version = "0.1.0"
 description = "Simple implementation of the Tic Tac Toe Game" #Short description of the package
-authors = [{ name = "Oleksandr Kostenko" }]
-readme = "README.md"                                          #Name of the readme file in the root of the project
-requires-python = ">=3.10"                                    #Information about Python version that will be required by Package
-keywords = ["Tic", "Tac", "Toe", "Game"]                      #The keywords for the project.
-license = { file = "LICENSE" }                                #The file key has a string value that is a file path relative to pyproject.toml to the file which contains the license for the project
+authors = [
+    "Oleksandr Kostenko <sanyokkua@gmail.com>",
+] # Authors names and contacts
+readme = "README.md" #Name of the readme file in the root of the project
+keywords = ["Tic", "Tac", "Toe", "Game"] #The keywords for the project.
+license = "GPL3" #The file key has a string value that is a file path relative to pyproject.toml to the file which contains the license for the project
 classifiers = ["Programming Language :: Python :: 3"]
-#Repository for Python dependencies is https://pypi.org/
-dependencies = [
-    "tk",      #For using tkinter instruments for developing UI for crossgameui package
-    "PyQt6",   #For using PyQt 6 Framework for developing UI for crossgameqt package
-    "Flask",   #For using Flask Web Framework for developing Web App for crossgameflask package
-    "blinker", #Required for better signal implementation in the Flask Framework
-    "Django",  #For using Django Web Framework for developing Web App for crossgamedjango package
-]
-dynamic = [
-    "version",
-] #Specifies fields/properties of the project metadata that can be provided by build tools
-
-[project.optional-dependencies]
-development = [
-    "flake8",             #Flake8 is a wrapper around these tools: PyFlakes, pycodestyle, Ned Batchelder’s McCabe script
-    "pylama==1.4.0",      #Code audit tool for Python.Pylama wraps these tools: pycodestyle, pydocstyle, PyFlakes, Mccabe, Pylint, Radon, eradicate, Mypy, Vulture
-    "autopep8",           #autopep8 automatically formats Python code to conform to the PEP 8 style guide.
-    "pep8",               #pep8 is a tool to check your Python code against some of the style conventions in PEP 8.
-    "pylint",             #Pylint is a static code analyser for Python 2 or 3.
-    "black",              #The Uncompromising Code Formatter
-    "poetry",             #Poetry: Dependency Management for Python
-    "bandit",             #A security linter from PyCQA
-    "mypy",               #Add type annotations to your Python programs, and use mypy to type check them
-    "flake8-builtins",
-    "flake8-bugbear",
-    "flake8-docstrings",
-    "flake8-isort",
-    "flake8-broken-line",
-    "flake8-quotes",
-    "flake8-mutable",
-    "isort",
-    "pyinstaller", # Can create an executable single app for Windows, Mac OS, Linux and some other OS
-    # "PyQt6-stubs",
+packages = [
+    { include = "crossgame" },
+    { include = "crossgameui" },
+    { include = "crossgameqt" },
+    { include = "game_resources" },
 ]
 
-[project.scripts]
-tictactoe = "crossgame.main:new_game" #Should create a script to run console version of the Game
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+tk = "0.1.0"            #For using tkinter instruments for developing UI for crossgameui package
+PyQt6 = "6.3.1"         #For using PyQt 6 Framework for developing UI for crossgameqt package
+Flask = "2.2.2"         #For using Flask Web Framework for developing Web App for crossgameflask package
+blinker = "1.5"         #Required for better signal implementation in the Flask Framework
+Django = "4.1"          #For using Django Web Framework for developing Web App for crossgamedjango package
 
-[project.gui-scripts]
+[tool.poetry.dev-dependencies]
+flake8 = "5.0.4"             #Flake8 is a wrapper around these tools: PyFlakes, pycodestyle, Ned Batchelder’s McCabe script
+pylama = "1.4.0"             #Code audit tool for Python.Pylama wraps these tools: pycodestyle, pydocstyle, PyFlakes, Mccabe, Pylint, Radon, eradicate, Mypy, Vulture
+autopep8 = "1.7.0"           #autopep8 automatically formats Python code to conform to the PEP 8 style guide.
+pep8 = "1.7.1"               #pep8 is a tool to check your Python code against some of the style conventions in PEP 8.
+pylint = "2.14.5"            #Pylint is a static code analyser for Python 2 or 3.
+black = "22.6.0"             #The Uncompromising Code Formatter
+bandit = "1.7.4"             #A security linter from PyCQA
+mypy = "0.971"               #Add type annotations to your Python programs, and use mypy to type check them
+flake8-broken-line = "0.5.0"
+flake8-bugbear = "22.7.1"
+flake8-builtins = "1.5.3"
+flake8-isort = "4.2.0"
+flake8-mutable = "1.2.0"
+flake8-quotes = "3.3.1"
+isort = "5.10.1"
+pyinstaller = "5.3"          # Can create an executable single app for Windows, Mac OS, Linux and some other OS
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+tictactoe = "crossgame.main:new_game"         #Should create a script to run console version of the Game
 tictactoetk = "crossgameui.app:start_game_tk" #Should create a script to run Tkinter version of the Game
-
-[tool.setuptools]
-include-package-data = true
-# This is already the default behaviour if your are using
-# pyproject.toml to configure your build.
-# You can deactivate that with `include-package-data = false`
-
-[tool.setuptools.packages.find]
-where = [
-    "crossgame",
-    "crossgameui",
-] # list of folders that contain the packages (["."] by default)
-include = [
-    "crossgame*",
-] # package names should match these glob patterns (["*"] by default)
-exclude = [
-    "tests*",
-] # exclude packages matching these glob patterns (empty by default)
-namespaces = false # to disable scanning PEP 420 namespaces (true by default)
+tictactoeqt = "crossgameqt.qtapp:start_game"  #Should create a script to run QT6 version of the Game

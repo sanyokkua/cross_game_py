@@ -14,4 +14,5 @@ def start_game_tk() -> None:
     root_tk_app.mainloop()
 
 
-start_game_tk()
+if __name__ == '__main__':
+    start_game_tk()

@@ -1,5 +1,6 @@
 """Module Contains main Class with Control Widget Implementation."""
 
+import importlib.resources as res
 import logging as log
 import sys
 
@@ -14,6 +15,7 @@ from crossgame.api.lang_provider import LangProvider
 from crossgame.logic.game import WinnerInfo
 from crossgame.logic.game_enums import Sign
 from crossgameqt.qtwidgets.qt_widget_field import TicTacToeFieldWidget
+from game_resources import img
 
 
 class TicTacToeControlWidget(LangProvider, QMainWindow):
@@ -23,12 +25,17 @@ class TicTacToeControlWidget(LangProvider, QMainWindow):
         """Initialize Main Control widget."""
         LangProvider.__init__(self, app_lang=app_lang)
         QMainWindow.__init__(self)
-        # super().__init__()
         self.controller = controller
-        self.img_cross: QIcon = QIcon(
-            QPixmap(f'{self.base_dir}/resources/img/img_cross.png'))
-        self.img_zero: QIcon = QIcon(
-            QPixmap(f'{self.base_dir}/resources/img/img_zero.png'))
+
+        img_cross: bytes = res.read_binary(img, 'img_cross.png')
+        img_zero: bytes = res.read_binary(img, 'img_zero.png')
+        q_pixmap_cross = QPixmap()
+        q_pixmap_cross.loadFromData(img_cross, 'PNG')
+        q_pixmap_zero = QPixmap()
+        q_pixmap_zero.loadFromData(img_zero, 'PNG')
+
+        self.img_cross: QIcon = QIcon(q_pixmap_cross)
+        self.img_zero: QIcon = QIcon(q_pixmap_zero)
 
         self.field_widget: TicTacToeFieldWidget = TicTacToeFieldWidget(
             self.on_field_button_click)

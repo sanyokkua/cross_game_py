@@ -42,48 +42,39 @@ The current structure of the project:
 - ./create_venv.sh - helper script to create venv and activate it. Testend only on Mac OS
 
 ## How to build and install
-1) Install Virtual Environment in order to install it locally, without installing package and dependencies globally
+Requires installed Python and Poetry.
+
+1. Create Virtual Environment in order to install packages locally, without installing packages globally
 ```Shell
 python3 -m venv .venv
 ```
-2) Activate in the current console session Virtual Environment
+1. Install Packages
 ```Shell
-source .venv/bin/activate
+poetry install
 ```
-3) Install Build Package
+3. Build the Project package
 ```Shell
-pip install build
+poetry build
 ```
-4) Install All the development Packages if it is reqiured
-```Shell
-pip install -e ".[development]"
-```
-5) Build the Project
-```Shell
-python -m build
-```
-6) Install package
-```Shell
-pip install dist/crossgame-0.0.1-py3-none-any.whl
-```
-7) Run the game (from the root folder of the repository)
+4. Run the game (from the root folder of the repository)
 - Console App
 ```Shell
-python -m crossgame.main
+poetry run tictactoe  
 ```
 - Tkinter App
 ```Shell
-python -m crossgameui.app
+poetry run tictactoetk
 ```
 - QT6 App
 ```Shell
-python -m crossgameqt.qtapp
+poetry run tictactoeqt
 ```
-8) If it is required, Project has unittests for the Game "Engine" (Base classes with the game logic)
+8. If it is required, Project has unittests for the Game "Engine" (Base classes with the game logic)
 ```Shell
+source .venv/bin/activate  # if it is not activated
 python -m unittest discover tests -v
 ```
-9) Make executable for your OS
+9. Make executable for your OS
 TODO: Fix Loading of the Resources (--add-data 'resources/:./resources' or change a way of loading resources)
 - Console App
 ```Shell
@@ -94,6 +85,15 @@ pyinstaller --onefile --windowed crossgame/main.py
 pyinstaller --onefile --windowed crossgameui/app.py
 ```
 - QT6 App
-```Shell
-pyinstaller --onefile --windowed crossgameqt/qtapp.py
+For QT version was created a separate build spec file to define crucial properties to build it in correct way
+
+To build spec file was used command (and if you want to just to build executable you should not use it again) and modified with custom properties:
+> ```shell
+> pyi-makespec --onefile --windowed crossgameqt/qtapp.py
+> ```
+
+And to build executables use this one instead:
+
+```shell
+pyinstaller qtapp.spec
 ```
