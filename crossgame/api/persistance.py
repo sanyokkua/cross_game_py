@@ -5,7 +5,7 @@ Module contains logic to manage game state.
         GameNotFoundException: raised if the game_id is not found
 
     Returns:
-        _type_: GameStatePersistance, SavedGameInfo
+        _type_: GameStateInMemoryPersistence, SavedGameInfo
 """
 import logging as log
 
@@ -17,7 +17,8 @@ from crossgame.logic.game import TicTacToeGame
 class SavedGameInfo:
     """SavedGameInfo is a object that contains information for saving in the scope of the session."""
 
-    def __init__(self, game_id: str, players: list[Player], game: TicTacToeGame = None) -> None:
+    def __init__(self, game_id: str, players: list[Player], game: TicTacToeGame = None,
+                 is_started: bool = False) -> None:
         """
         Initialize SavedGameInfo object.
 
@@ -25,17 +26,19 @@ class SavedGameInfo:
             game_id (str): game ID
             players (list[Player]): player name list
             game (TicTacToeGame, optional): current game. Defaults to None.
+            is_started (bool): true if game was started
         """
         self.game: TicTacToeGame = game
         self.players: list[Player] = players
         self.game_id: str = game_id
+        self.is_started: bool = is_started
 
 
-class GameStatePersistance:
-    """STUB persistance service that works in memory."""
+class GameStateInMemoryPersistence:
+    """STUB persistence service that works in memory."""
 
     def __init__(self) -> None:
-        """Initialize Game State Persistance Stub."""
+        """Initialize Game State Persistence Stub."""
         self.game_info_dict: dict[str, SavedGameInfo] = {}
 
     def save_game_info(self, game_id: str, game_info: SavedGameInfo) -> None:

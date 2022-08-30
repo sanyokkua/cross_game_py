@@ -5,7 +5,7 @@ import logging as log
 from PyQt6.QtWidgets import QApplication
 
 from crossgame.api.controller import Controller
-from crossgame.api.persistance import GameStatePersistance
+from crossgame.api.persistance import GameStateInMemoryPersistence
 from crossgameqt.qtwidgets.qt_widget_control import TicTacToeControlWidget
 
 
@@ -16,7 +16,7 @@ class TicTacToeQtApp(QApplication):
         """Initialize Application."""
         super().__init__([])
         log.debug('TicTacToeQtApp.__init__')
-        self.game_persistence = GameStatePersistance()
+        self.game_persistence = GameStateInMemoryPersistence()
         self.controller = Controller(self.game_persistence)
         self.w_control = TicTacToeControlWidget(self.controller, game_lang)
         self.w_control.show()

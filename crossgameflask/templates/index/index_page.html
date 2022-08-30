@@ -1,0 +1,19 @@
+{% extends "base_template.html" %}
+{% block page_title %}
+    TicTacToe Game
+{% endblock page_title %}
+{% block body %}
+    {{ super() }}
+    <div class="mb-3">
+        <form action="{{ get_new_game_page_url }}">
+            <div class="mb-3">
+                <input type="submit" value="Start New Game" class="form-control"/>
+            </div>
+        </form>
+        <form action="{{ get_join_game_page_url }}">
+            <div class="mb-3">
+                <input type="submit" value="Join the Game by ID" class="form-control"/>
+            </div>
+        </form>
+    </div>
+{% endblock body %}

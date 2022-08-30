@@ -23,6 +23,7 @@ PyQt6 = "6.3.1"         #For using PyQt 6 Framework for developing UI for crossg
 Flask = "2.2.2"         #For using Flask Web Framework for developing Web App for crossgameflask package
 blinker = "1.5"         #Required for better signal implementation in the Flask Framework
 Django = "4.1"          #For using Django Web Framework for developing Web App for crossgamedjango package
+Flask-WTF = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "5.0.4"             #Flake8 is a wrapper around these tools: PyFlakes, pycodestyle, Ned Batchelder’s McCabe script
@@ -41,6 +42,7 @@ flake8-mutable = "1.2.0"
 flake8-quotes = "3.3.1"
 isort = "5.10.1"
 pyinstaller = "5.3"          # Can create an executable single app for Windows, Mac OS, Linux and some other OS
+djlint = "^1.12.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -50,3 +52,4 @@ build-backend = "poetry.core.masonry.api"
 tictactoe = "crossgame.main:new_game"         #Should create a script to run console version of the Game
 tictactoetk = "crossgameui.app:start_game_tk" #Should create a script to run Tkinter version of the Game
 tictactoeqt = "crossgameqt.qtapp:start_game"  #Should create a script to run QT6 version of the Game
+tictactoeflask = "crossgameflask.flask_app:run_app"  #Should create a script to run QT6 version of the Game

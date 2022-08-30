@@ -1,0 +1,12 @@
+{% extends "error_base.html" %}
+{% block page_title %}
+    Error happen during processing in the App
+{% endblock page_title %}
+{% block body %}
+    {{ super() }}
+    <div>
+        <p>
+            Currently server can't process your request. It is an internal server error
+        </p>
+    </div>
+{% endblock body %}

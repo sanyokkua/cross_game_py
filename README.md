@@ -9,7 +9,7 @@ For example:
 - Working with python lists (collections)
 - Working with python dictionaries (maps)
 - Working with python OOP (class, inheritance, etc)
-- Working with python lambdas and clousures
+- Working with python lambdas and closures
 - Working with python modules
 
 ## Technologies
@@ -31,9 +31,11 @@ Also, here will be used build and distribution tools for packaging this project
 
 ## Structure
 The current structure of the project:
+
 - ./crossgame - Main module with all the logic and basic console app
+- ./crossgameflask - Module with the implementation of the game on the Flask Framework
 - ./crossgameui - Module with the implementation of the simple Tkinter UI
-- ./crossgameqt - Mpdule with the implementation of the simple QT6 UI
+- ./crossgameqt - Module with the implementation of the simple QT6 UI
 - ./resources - folder with any static resources that can be used in the app
 - ./tests - unit tests (currently only for the Main module)
 - ./pyproject.toml - all the meta information about project, including development dependencies
@@ -42,7 +44,8 @@ The current structure of the project:
 - ./create_venv.sh - helper script to create venv and activate it. Testend only on Mac OS
 
 ## How to build and install
-Requires installed Python and Poetry.
+
+Requires to be installed Python and Poetry.
 
 1. Create Virtual Environment in order to install packages locally, without installing packages globally
 ```Shell
@@ -61,22 +64,38 @@ poetry build
 ```Shell
 poetry run tictactoe  
 ```
+
 - Tkinter App
+
 ```Shell
 poetry run tictactoetk
 ```
+
 - QT6 App
+
 ```Shell
 poetry run tictactoeqt
 ```
+
+- Flask App
+
+```shell
+export FLASK_APP_KEY='YOUR_SECRET_APP_KEY'
+poetry run tictactoeflask
+```
+
 8. If it is required, Project has unittests for the Game "Engine" (Base classes with the game logic)
+
 ```Shell
 source .venv/bin/activate  # if it is not activated
 python -m unittest discover tests -v
 ```
+
 9. Make executable for your OS
-TODO: Fix Loading of the Resources (--add-data 'resources/:./resources' or change a way of loading resources)
+   TODO: Fix Loading of the Resources (--add-data 'resources/:./resources' or change a way of loading resources)
+
 - Console App
+
 ```Shell
 pyinstaller --onefile --windowed crossgame/main.py
 ```

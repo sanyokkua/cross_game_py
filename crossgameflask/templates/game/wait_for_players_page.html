@@ -1,0 +1,24 @@
+{% extends "base_template.html" %}
+{% block page_title %}
+    Wait until other players are join
+{% endblock page_title %}
+{% block javascript %}
+    {{ super() }}
+    <body onload="refreshPageOnTime('{{ game_status_page_url }}');">
+{% endblock javascript %}
+{% block body %}
+    {{ super() }}
+    <div>
+        <div>
+            <p>
+            <h3> Share with other players game_id</h3>
+            </p>
+        </div>
+        <div>
+            <h1><span class="badge bg-success">{{ game_id }}</span></h1>
+        </div>
+        <form action="{{ game_status_page_url }}" method="get">
+            <input type="submit" value="Update" class="btn btn-primary"/>
+        </form>
+    </div>
+{% endblock body %}

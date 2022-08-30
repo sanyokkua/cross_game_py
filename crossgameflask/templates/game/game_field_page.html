@@ -1,0 +1,48 @@
+{% extends "base_template.html" %}
+{% block page_title %}
+    {% if is_active_view %}
+        {{ player_name }} please put <span class="badge text-bg-primary">{{ player_sign }}</span> to the field
+    {% else %}
+        {{ player_name }} with <span class="badge text-bg-primary">{{ player_sign }}</span> please wait other player
+        make a move
+    {% endif %}
+
+{% endblock page_title %}
+{% block javascript %}
+    {{ super() }}
+    <body onload="refreshPageOnTime('{{ game_status_page_url }}', 5);">
+{% endblock javascript %}
+{% block body %}
+    {{ super() }}
+    <div>
+        <div>
+            <table class="table">
+                {% for row in game_field %}
+                    <tr>
+                        {% for col in row %}
+                            <td>
+                                <form action="{{ post_make_move_url }}" method="post">
+                                    <input type="hidden" id="game_id" name="game_id" value="{{ game_id }}"/>
+                                    <input type="hidden" id="player_id" name="player_id" value="{{ player_id }}"/>
+                                    <input type="hidden" id="row" name="row" value="{{ col.row }}"/>
+                                    <input type="hidden" id="column" name="column" value="{{ col.col }}"/>
+                                    {% if is_active_view and col.value.strip() == "" %}
+                                        <input type="submit" value="{{ col.value }}" class="btn btn-outline-success"/>
+                                    {% else %}
+                                        <input type="submit" value="{{ col.value }}" class="btn btn-light" disabled/>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br/>
+        <div>
+            <form action="{{ get_game_status_page_url }}" method="get">
+                <input type="submit" value="Update" class="btn btn-light"/>
+            </form>
+        </div>
+    </div>
+{% endblock body %}

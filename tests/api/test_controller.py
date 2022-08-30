@@ -1,20 +1,20 @@
 from unittest import TestCase
 
 from crossgame.api.controller import Controller
-from crossgame.api.persistance import GameStatePersistance
+from crossgame.api.persistance import GameStateInMemoryPersistence
 from crossgame.logic.game_enums import Sign
 
 
 class TestController(TestCase):
     def test_controller_creation(self):
-        persistance = GameStatePersistance()
+        persistance = GameStateInMemoryPersistence()
         controller = Controller(persistance)
         self.assertIsNotNone(controller)
         self.assertIsNotNone(controller.persistance)
         self.assertEqual(0, len(controller.persistance.game_info_dict))
 
     def test_start_game_session(self):
-        persistance = GameStatePersistance()
+        persistance = GameStateInMemoryPersistence()
         controller = Controller(persistance)
         game_state_dto = controller.start_game_session('player-1')
         self.assertIsNotNone(game_state_dto)
@@ -34,7 +34,7 @@ class TestController(TestCase):
         self.assertTrue(player.is_active)
 
     def test_join_to_game_game_session(self):
-        persistance = GameStatePersistance()
+        persistance = GameStateInMemoryPersistence()
         controller = Controller(persistance)
         game_id = controller.start_game_session('player-1').game_id
         game_state_dto = controller.join_to_game_game_session(
@@ -55,7 +55,7 @@ class TestController(TestCase):
         self.assertFalse(player.is_active)
 
     def test_start_game(self):
-        persistance = GameStatePersistance()
+        persistance = GameStateInMemoryPersistence()
         controller = Controller(persistance)
         game_id = controller.start_game_session('player-1').game_id
         controller.join_to_game_game_session('player-2', game_id)
@@ -68,7 +68,7 @@ class TestController(TestCase):
         self.assertIsNotNone(game_state_info.game)
 
     def test_make_move(self):
-        persistance = GameStatePersistance()
+        persistance = GameStateInMemoryPersistence()
         controller = Controller(persistance)
         init_state = controller.start_game_session('player-1')
         game_id = init_state.game_id
@@ -93,7 +93,7 @@ class TestController(TestCase):
         self.assertTrue(player_1.is_active)
 
     def test_get_status(self):
-        persistance = GameStatePersistance()
+        persistance = GameStateInMemoryPersistence()
         controller = Controller(persistance)
         init_state = controller.start_game_session('player-1')
         game_id = init_state.game_id

@@ -1,0 +1,12 @@
+{% extends "error_base.html" %}
+{% block page_title %}
+    Error happen during requesting of the page
+{% endblock page_title %}
+{% block body %}
+    {{ super() }}
+    <div>
+        <p>
+            You Have Requested incorrect page, that doesn't exist
+        </p>
+    </div>
+{% endblock body %}

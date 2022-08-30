@@ -33,12 +33,12 @@ class WinnerInfo:
 @dataclass
 class GameStateDto:
     """Represent current game status."""
-
     game_id: str
     player_names: list[str]
     active_player: Player = None
     field: list[list[Sign]] = None
     winner: WinnerInfo = None
+    is_started: bool = False
 
 
 class TicTacToeGame:
@@ -136,12 +136,14 @@ class TicTacToeGame:
         if GameStatus.FINISHED == state.status:
             self.winner = WinnerInfo(
                 self.__get_player_by_sign(state.sign), state.sign)  # type: ignore
-            return GameStateDto(self.game_id, player_names_list, active_player, self.get_field(), self.winner)
+            return GameStateDto(self.game_id, player_names_list, active_player, self.get_field(), self.winner,
+                                is_started=True)
         elif GameStatus.DRAW == state.status:
             self.winner = WinnerInfo(None, None, True)
-            return GameStateDto(self.game_id, player_names_list, active_player, self.get_field(), self.winner)
+            return GameStateDto(self.game_id, player_names_list, active_player, self.get_field(), self.winner,
+                                is_started=True)
         else:
-            return GameStateDto(self.game_id, player_names_list, active_player, self.get_field())
+            return GameStateDto(self.game_id, player_names_list, active_player, self.get_field(), is_started=True)
 
     def get_field(self) -> list[list[Sign]]:
         """Return a copy of the game field (matrix)."""

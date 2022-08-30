@@ -1,0 +1,18 @@
+{% extends "base_template.html" %}
+{% block page_title %}
+    Create New Game
+{% endblock page_title %}
+{% block body %}
+    {{ super() }}
+    <div class="align-items-center">
+        <form action="{{ post_new_game_url }}" method="post">
+            <div class="row mb-3">
+                <label for="player_name" class="col-sm-2 col-form-label">Player Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="player_name" id="player_name" class="form-control"/>
+                </div>
+            </div>
+            <input type="submit" value="Start Game" class="btn btn-primary"/>
+        </form>
+    </div>
+{% endblock body %}

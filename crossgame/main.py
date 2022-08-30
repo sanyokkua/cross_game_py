@@ -1,7 +1,7 @@
 """Module represent Console version of the game."""
 
 from crossgame.api.controller import Controller
-from crossgame.api.persistance import GameStatePersistance
+from crossgame.api.persistance import GameStateInMemoryPersistence
 from crossgame.api.player import Player
 from crossgame.logic.game import GameStateDto
 
@@ -9,7 +9,7 @@ from crossgame.logic.game import GameStateDto
 def new_game() -> None:
     """Start the console version of the game."""
     print('New Game')
-    game_persistence = GameStatePersistance()
+    game_persistence = GameStateInMemoryPersistence()
     controller = Controller(game_persistence)
     print('Player 1 enter the name:')
     player_1_name = input()

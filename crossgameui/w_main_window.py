@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import NSEW, messagebox, ttk
 
 from crossgame.api.controller import Controller
-from crossgame.api.persistance import GameStatePersistance
+from crossgame.api.persistance import GameStateInMemoryPersistence
 from crossgame.logic.game import GameStateDto, WinnerInfo
 from crossgame.logic.game_enums import Sign
 from crossgameui.w_base import BaseAppWidget
@@ -26,7 +26,7 @@ class TicTacToeUIApp(BaseAppWidget, ttk.Frame):
         BaseAppWidget.__init__(self, app_lang=app_lang)
         ttk.Frame.__init__(self, root)
 
-        self.game_persistence = GameStatePersistance()
+        self.game_persistence = GameStateInMemoryPersistence()
         self.controller = Controller(self.game_persistence)
         self.latest_state: GameStateDto | None = None
 

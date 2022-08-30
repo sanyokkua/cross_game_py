@@ -40,8 +40,8 @@ class GameState:
         if width != height or width % 2 == 0 or width < 3 or height < 3:
             raise IncorrectFieldSizeException(
                 'Field width and height should be equal')
-        line = [None for i in range(height)]
-        self.field = [[x for x in line] for i in range(width)]
+        line = [None for _ in range(height)]
+        self.field = [[x for x in line] for _ in range(width)]
         log.info('Game Field was generated: %s',
                  GameState.make_pritty_array_str(self.field))
 
@@ -61,12 +61,12 @@ class GameState:
         Put a Sign (X or O) to the field with its coordinates x and y.
 
         Args:
-            x (int): row of the field
-            y (int): column of the field
+            x_coordinate (int): row of the field
+            y_coordinate (int): column of the field
             sign (Sign): Move Sign (X or O)
 
         Raises:
-            CellIsAlreadyBusy: Raises eception if there is a try to put value in the cell that already has a value
+            CellIsAlreadyBusy: Raises exception if there is a try to put value in the cell that already has a value
         """
         if self.is_cell_empty(x_coordinate, y_coordinate):
             log.debug('Cell %s:%s will be set to %s',
@@ -133,11 +133,12 @@ class GameState:
             line (list): array with values []
 
         Returns:
-            tuple: (Bool, Sign) first value represents if the all values are equal, the second - value in the first position
+            tuple: (Bool, Sign) first value represents if the all values are equal,
+                                the second - value in the first position
         """
         first_item = line[0]
         values = [item for item in line if item == first_item and item is not None]
-        return (len(values) == len(line), first_item)
+        return len(values) == len(line), first_item
 
     @staticmethod
     def make_pritty_array_str(array: list[list[Sign]]) -> str:

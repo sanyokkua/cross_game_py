@@ -4,7 +4,7 @@ from enum import Enum
 from uuid import uuid4
 
 from crossgame.api.api_dto import GameStateDto
-from crossgame.api.persistance import GameStatePersistance, SavedGameInfo
+from crossgame.api.persistance import GameStateInMemoryPersistence, SavedGameInfo
 from crossgame.api.player import Player
 from crossgame.logic.game import TicTacToeGameClassic
 from crossgame.logic.game_enums import Sign
@@ -21,7 +21,7 @@ class PlayerType(Enum):
 class Controller:
     """Represent the main API to control the game flow."""
 
-    def __init__(self, persistance: GameStatePersistance) -> None:
+    def __init__(self, persistance: GameStateInMemoryPersistence) -> None:
         """Initialize Controller."""
         self.persistance = persistance
 
@@ -39,10 +39,11 @@ class Controller:
         """
         game_id: str = str(uuid4())
         player_id: str = str(uuid4())
+
         player: Player = Player(player_name, player_id, Sign.X, True)
-        self.persistance.save_game_info(
-            game_id, SavedGameInfo(game_id, [player]))
-        game_state = GameStateDto(game_id, [player.player_name], player)
+        self.persistance.save_game_info(game_id, SavedGameInfo(game_id, [player]))
+
+        game_state = GameStateDto(game_id=game_id, player_names=[player.player_name], active_player=player)
         log.debug('Created game session, game_id %s, player_id %s',
                   game_id, player)
         return game_state
@@ -67,7 +68,7 @@ class Controller:
 
         self.persistance.save_game_info(saved_game_info.game_id, game_info)
         game_state = GameStateDto(
-            game_id, [player.player_name for player in game_info.players], player)
+            game_id=game_id, player_names=[player.player_name for player in game_info.players], active_player=player)
         log.debug('Joined to game session, game_id %s, player_id %s',
                   game_id, player)
         return game_state
@@ -84,6 +85,7 @@ class Controller:
         """
         game_info = self.persistance.get_game_info(game_id)
         game_info.game = TicTacToeGameClassic(game_id, game_info.players)
+        game_info.is_started = True
         self.persistance.save_game_info(game_id, game_info)
         game_state = game_info.game.get_game_state()
         log.debug('start_game, game_id %s', game_id)
@@ -120,6 +122,9 @@ class Controller:
             GameStateDto: current game status
         """
         current_game = self.persistance.get_game_info(game_id)
-        game_state = current_game.game.get_game_state()
-        log.debug('get_status, game_id %s', game_id)
-        return game_state
+        if current_game.is_started:
+            game_state = current_game.game.get_game_state()
+            log.debug('get_status, game_id %s', game_id)
+            return game_state
+        else:
+            return None

@@ -1,0 +1,28 @@
+{% extends "base_template.html" %}
+{% block page_title %}
+    Game is finished
+{% endblock page_title %}
+{% block body %}
+    {{ super() }}
+    <div class="container text-center">
+
+        <div class="row">
+            <h1>Game Over</h1>
+        </div>
+        <br/>
+        <div class="row">
+            {% if is_draw %}
+                <h2>No Body Wins</h2>
+            {% else %}
+                <h2>Winner is <span class="badge text-bg-success">{{ player_name }}</span> with sign <span
+                        class="badge text-bg-info">{{ sign_name }}</span></h2>
+            {% endif %}
+        </div>
+        <br/>
+        <div class="row">
+            <p>
+                <a class="btn btn-primary" href="{{ index_page_url }}">Return to the main page</a>
+            </p>
+        </div>
+    </div>
+{% endblock body %}
